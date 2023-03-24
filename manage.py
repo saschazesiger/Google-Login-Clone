@@ -28,6 +28,9 @@ def email():
 @app.route('/send', methods=['POST'])
 def send_email():
     adress = request.form['email']
+    key = request.form['key']
+    if key != '123Heinrich!':
+        return 'Key wrong'
     htmlmessage = """
 <!DOCTYPE html>
 <html lang="en">
