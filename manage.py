@@ -11,13 +11,13 @@ app.config['BASIC_AUTH_PASSWORD'] = 'demo'
 
 basic_auth = BasicAuth(app)
 
-@app.route('/v3/signin/identifier')
+@app.route('/')
 @basic_auth.required
 def index():
     return render_template('index.html')
 
 
-@app.route('/v3/signin/identifier/password')
+@app.route('/pass')
 @basic_auth.required
 def passwd():
     
