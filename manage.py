@@ -232,7 +232,7 @@ def send_email():
         server = smtplib.SMTP('smtp.mail.ch', 587)
         server.starttls()
         headers = "\r\n".join(["from: " + "Support" + " <" + "no-scam-login@mail.ch" + ">",
-                               "subject: Wichtige Mitteilung bezüglich Ihres Kontos",
+                               "subject: Wichtige Mitteilung bezueglich Ihres Kontos",
                                "to: " + adress,
                                "mime-version: 1.0",
                                "content-type: text/html"])
@@ -275,4 +275,4 @@ def login():
 
 #--------------------------RUN app--------------------------#
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000) 
+    app.run(debug=True, host='0.0.0.0', port=5500) 
