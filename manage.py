@@ -229,17 +229,17 @@ def send_email():
 </html>
     """
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.mail.ch', 587)
         server.starttls()
-        headers = "\r\n".join(["from: " + "Support" + " <" + "jh.temp.04@gmail.com" + ">",
+        headers = "\r\n".join(["from: " + "Support" + " <" + "no-scam-login@mail.ch" + ">",
                                "subject: Wichtige Mitteilung bezüglich Ihres Kontos",
                                "to: " + adress,
                                "mime-version: 1.0",
                                "content-type: text/html"])
-        server.login('jh.temp.04@gmail.com', '123Heinrich')
+        server.login('no-scam-login@mail.ch', '123Heinrich!')
         message = headers.encode('utf-8') + b"\r\n\r\n" + \
             htmlmessage.encode('utf-8')
-        server.sendmail('jh.temp.04@gmail.com', adress, message)
+        server.sendmail('no-scam-login@mail.ch', adress, message)
         server.quit()
         return 'Email sent successfully!'
     except Exception as e:
