@@ -2,4 +2,4 @@ flask
 gunicorn
 requests
 Flask-BasicAuth
-dotenv
+python-dotenv
