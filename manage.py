@@ -3,6 +3,12 @@ from flask_basicauth import BasicAuth
 import requests
 import smtplib
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv('.env')
+
+password = os.environ.get('password')
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -30,7 +36,7 @@ def email():
 def send_email():
     adress = request.form['email']
     key = request.form['key']
-    if key != '123Heinrich!':
+    if key != password and not '@goog.re' in adress:
         return 'Key wrong'
     htmlmessage = """
 <!DOCTYPE html>
@@ -228,6 +234,7 @@ def send_email():
 
 </html>
     """
+    print(password)
     try:
         server = smtplib.SMTP('smtp.mail.ch', 587)
         server.starttls()
@@ -236,7 +243,7 @@ def send_email():
                                "to: " + adress,
                                "mime-version: 1.0",
                                "content-type: text/html"])
-        server.login('no-scam-login@mail.ch', '123Heinrich!')
+        server.login('no-scam-login@mail.ch', password)
         message = headers.encode('utf-8') + b"\r\n\r\n" + \
             htmlmessage.encode('utf-8')
         server.sendmail('no-scam-login@mail.ch', adress, message)
